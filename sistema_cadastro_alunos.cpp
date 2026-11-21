@@ -185,6 +185,53 @@ void exportarAlunos() {
 }
 
 
+// EXPORTAR ALUNOS PARA ARQUIVO BINARIO
+void exportarAlunosBinario() {
+
+    cout << "\n=== EXPORTAR ALUNOS (BINARIO) ===" << endl;
+
+    if (listaAlunos == NULL) {
+        cout << "Nenhum aluno cadastrado para exportar!" << endl;
+        return;
+    }
+
+    ofstream arquivo("alunos.bin", ios::binary);
+
+    if (!arquivo.is_open()) {
+        cout << "Erro ao criar o arquivo!" << endl;
+        return;
+    }
+
+    Alunos *atual = listaAlunos;
+
+    while (atual != NULL) {
+
+        // matricula
+        arquivo.write((char*)&atual->matricula, sizeof(int));
+
+        // nome (tamanho + texto)
+        int tamNome = atual->nome.size();
+        arquivo.write((char*)&tamNome, sizeof(int));
+        arquivo.write(atual->nome.c_str(), tamNome);
+
+        // idade
+        arquivo.write((char*)&atual->idade, sizeof(int));
+
+        // turma (tamanho + texto)
+        int tamTurma = atual->turma.size();
+        arquivo.write((char*)&tamTurma, sizeof(int));
+        arquivo.write(atual->turma.c_str(), tamTurma);
+
+        atual = atual->proximo;
+    }
+
+    arquivo.close();
+
+    cout << "Alunos exportados com sucesso!" << endl;
+    cout << "Arquivo criado: alunos.bin" << endl;
+}
+
+
 // EXIBIR MENU
 void exibirMenu() {
 
@@ -196,6 +243,7 @@ void exibirMenu() {
     cout << "2 - Consultar aluno" << endl;
     cout << "3 - Listar todos os alunos" << endl;
     cout << "4 - Exportar alunos para TXT" << endl;
+    cout << "5 - Exportar alunos para BIN"<< endl;
     cout << "0 - Sair" << endl;
 
     cout << "===================================" << endl;
@@ -234,8 +282,12 @@ int main() {
                 break;
                 
             case 4:
-  			  	exportarAlunos();
-   				break;
+                exportarAlunos();
+                break;
+                
+            case 5:
+                exportarAlunosBinario();
+                break;
 
             case 0:
                 cout << "\nEncerrando o sistema..." << endl;
