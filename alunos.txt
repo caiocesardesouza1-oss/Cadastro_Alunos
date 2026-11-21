@@ -1,0 +1,13 @@
+       LISTA DE ALUNOS
+
+Matricula: 999
+Nome: caio 
+Idade: 19
+Turma: 2026
+-----------------------------------
+
+Matricula: 123
+Nome: lukas
+Idade: 24
+Turma: 2026
+-----------------------------------
